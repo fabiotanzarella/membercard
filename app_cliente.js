@@ -4,43 +4,30 @@ const apiUrl = "https://script.google.com/macros/s/AKfycby5uRvoH7GeFRwFsz3JGaVNL
 /**
  * Funzione per recuperare il saldo del cliente.
  */
-async function recuperaSaldo() {
-    const idCliente = document.getElementById("idCliente").value;
-
-    if (!idCliente) {
-        alert("Inserisci un ID Cliente valido.");
-        return;
-    }
-
-    // Creiamo l'URL con i parametri
+async function recuperaSaldo(idCliente) {
     const url = `${apiUrl}?action=recuperaSaldo&id_cliente=${encodeURIComponent(idCliente)}`;
 
     try {
-        // Effettuiamo una richiesta GET
         const response = await fetch(url, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
-            }
+            },
+            mode: "cors"
         });
 
-        if (!response.ok) {
-            throw new Error(`Errore di rete: ${response.status}`);
-        }
-
         const data = await response.json();
-        console.log("Risposta dell'API:", data);
-
         if (data.status === "success") {
-            alert(`Saldo punti per ${idCliente}: ${data.saldo} punti`);
+            alert(`Saldo: ${data.saldo} punti`);
         } else {
             alert(data.message);
         }
     } catch (error) {
         console.error("Errore durante la richiesta:", error);
-        alert("Errore durante la richiesta. Verifica la connessione e riprova.");
+        alert("Errore durante la richiesta.");
     }
 }
+
 
 /**
  * Funzione per scannerizzare il QR Code e ottenere l'ID Cliente.
