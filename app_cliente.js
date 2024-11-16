@@ -1,5 +1,5 @@
 // Sostituisci `tuo-script-id` con l'ID del tuo Google Apps Script
-const apiUrl = "https://script.google.com/macros/s/AKfycbyH9V7DoTUjgLLHhQbUswx00lLBqYRGZ-iQqlXD-rdrtgvL44cgSt_LEv9lVQU9AHyy5A/exec";
+const apiUrl = "https://script.google.com/macros/s/AKfycby5uRvoH7GeFRwFsz3JGaVNLSoGyOb6ASR4WbQPJRTIrK6MtjyFZgOQQSLFMgiCFhHiog/exec";
 
 function recuperaSaldo() {
     const idCliente = document.getElementById("idCliente").value;
