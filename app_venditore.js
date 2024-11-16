@@ -1,12 +1,26 @@
 const apiUrl = "https://script.google.com/macros/s/AKfycbyx59Jp_fzAniWATo1Tf3FOoondSeiBo2hpOg56N0G0ReWyVsnOt191l4bW3d6rJDn2yg/exec";
 
 /**
+ * Verifica se la libreria Html5Qrcode è stata caricata correttamente.
+ */
+if (typeof Html5Qrcode === "undefined") {
+    console.error("Errore: La libreria Html5Qrcode non è stata caricata correttamente.");
+    alert("Errore: La libreria per la scansione del QR Code non è disponibile.");
+}
+
+/**
  * Funzione per avviare la scansione del QR Code.
  */
 async function startQRCodeScan() {
+    if (typeof Html5Qrcode === "undefined") {
+        alert("Errore: La libreria per la scansione del QR Code non è disponibile.");
+        return;
+    }
+
     const html5QrCode = new Html5Qrcode("reader");
 
     try {
+        console.log("Avvio della scansione del QR Code...");
         await html5QrCode.start(
             { facingMode: "environment" },
             {
@@ -34,7 +48,6 @@ async function startQRCodeScan() {
  */
 async function recuperaSaldo() {
     const idCliente = document.getElementById("idCliente").value.trim();
-    const apiUrl = "https://script.google.com/macros/s/tuo-script-id/exec";
 
     if (!idCliente) {
         alert("Inserisci un ID Cliente valido.");
@@ -42,6 +55,7 @@ async function recuperaSaldo() {
     }
 
     try {
+        console.log(`Recupero saldo per ID Cliente: ${idCliente}`);
         const response = await fetch(`${apiUrl}?action=recuperaSaldo&id_cliente=${idCliente}`, {
             method: "GET",
             mode: "cors",
@@ -58,7 +72,7 @@ async function recuperaSaldo() {
         console.log("Risposta:", data);
 
         if (data.status === "success") {
-            alert(`Saldo punti: ${data.saldo}`);
+            document.getElementById("output").innerText = `Saldo punti: ${data.saldo}`;
         } else {
             alert(data.message);
         }
@@ -67,7 +81,6 @@ async function recuperaSaldo() {
         alert("Errore durante il recupero del saldo.");
     }
 }
-
 
 /**
  * Funzione per aggiornare il saldo del cliente.
@@ -81,9 +94,8 @@ async function aggiornaSaldo() {
         return;
     }
 
-    console.log("Aggiornamento saldo per ID Cliente:", idCliente, "Punti:", punti);
-
     try {
+        console.log(`Aggiornamento saldo per ID Cliente: ${idCliente}, Punti: ${punti}`);
         const response = await fetch(apiUrl, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -91,10 +103,10 @@ async function aggiornaSaldo() {
         });
 
         const data = await response.json();
-        console.log("Risposta dell'API:", data);
+        console.log("Risposta:", data);
 
         if (data.status === "success") {
-            document.getElementById("output").innerText = `Nuovo saldo: ${data.data.nuovoSaldo}`;
+            document.getElementById("output").innerText = `Nuovo saldo: ${data.nuovoSaldo}`;
         } else {
             alert(data.message);
         }
@@ -116,9 +128,8 @@ async function aggiungiCliente() {
         return;
     }
 
-    console.log("Aggiunta cliente:", idCliente, nome);
-
     try {
+        console.log(`Aggiunta cliente: ${idCliente}, Nome: ${nome}`);
         const response = await fetch(apiUrl, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -126,7 +137,7 @@ async function aggiungiCliente() {
         });
 
         const data = await response.json();
-        console.log("Risposta dell'API:", data);
+        console.log("Risposta:", data);
 
         alert(data.message);
     } catch (error) {
