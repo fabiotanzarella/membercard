@@ -1,37 +1,40 @@
 // URL dell'API di Google Apps Script
 const apiUrl = "https://script.google.com/macros/s/AKfycby5uRvoH7GeFRwFsz3JGaVNLSoGyOb6ASR4WbQPJRTIrK6MtjyFZgOQQSLFMgiCFhHiog/exec";
 
+
 /**
- * Funzione per aggiungere punti al saldo di un cliente.
+ * Funzione per aggiungere punti al saldo del cliente.
  */
 async function aggiornaSaldo() {
     const idCliente = document.getElementById("idCliente").value;
     const punti = parseInt(document.getElementById("punti").value);
 
     if (!idCliente || isNaN(punti)) {
-        alert("Inserisci un ID Cliente e un numero di punti valido.");
+        alert("Inserisci un ID Cliente e un numero di punti validi.");
         return;
     }
 
+    // Creiamo l'URL con i parametri
+    const url = `${apiUrl}?action=aggiornaSaldo&id_cliente=${encodeURIComponent(idCliente)}&punti=${encodeURIComponent(punti)}`;
+
     try {
-        // Effettua una richiesta POST all'API
-        const response = await fetch(apiUrl, {
-            method: "POST",
+        // Effettuiamo una richiesta GET
+        const response = await fetch(url, {
+            method: "GET",
             headers: {
                 "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                action: "aggiornaSaldo",
-                id_cliente: idCliente,
-                punti: punti
-            })
+            }
         });
+
+        if (!response.ok) {
+            throw new Error(`Errore di rete: ${response.status}`);
+        }
 
         const data = await response.json();
         console.log("Risposta dell'API:", data);
 
         if (data.status === "success") {
-            alert(`Saldo aggiornato: ${data.nuovoSaldo} punti`);
+            alert(`Saldo aggiornato per ${idCliente}: ${data.nuovoSaldo} punti`);
         } else {
             alert(data.message);
         }
