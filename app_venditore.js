@@ -1,51 +1,70 @@
 // Sostituisci `tuo-script-id` con l'ID del tuo Google Apps Script
 const apiUrl = "https://script.google.com/macros/s/AKfycby5uRvoH7GeFRwFsz3JGaVNLSoGyOb6ASR4WbQPJRTIrK6MtjyFZgOQQSLFMgiCFhHiog/exec";
 
-function aggiornaSaldo() {
+/**
+ * Funzione per aggiungere punti al saldo di un cliente.
+ */
+async function aggiornaSaldo() {
     const idCliente = document.getElementById("idCliente").value;
     const punti = parseInt(document.getElementById("punti").value);
 
-    fetch(apiUrl, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            action: "aggiornaSaldo",
-            id_cliente: idCliente,
-            punti: punti
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
+    if (!idCliente || isNaN(punti)) {
+        alert("Inserisci un ID Cliente e un numero di punti valido.");
+        return;
+    }
+
+    try {
+        // Effettua una richiesta POST all'API
+        const response = await fetch(apiUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                action: "aggiornaSaldo",
+                id_cliente: idCliente,
+                punti: punti
+            })
+        });
+
+        const data = await response.json();
+        console.log("Risposta dell'API:", data);
+
         if (data.status === "success") {
-            document.getElementById("outputVenditore").textContent = `Saldo aggiornato: ${data.nuovoSaldo}`;
+            alert(`Saldo aggiornato: ${data.nuovoSaldo} punti`);
         } else {
-            document.getElementById("outputVenditore").textContent = data.message;
+            alert(data.message);
         }
-    })
-    .catch(error => console.error("Errore:", error));
+    } catch (error) {
+        console.error("Errore durante la richiesta:", error);
+        alert("Errore durante la richiesta. Verifica la connessione e riprova.");
+    }
 }
 
-function startQRCodeScan() {
+/**
+ * Funzione per scannerizzare il QR Code e ottenere l'ID Cliente.
+ */
+async function startQRCodeScan() {
     const html5QrCode = new Html5Qrcode("reader");
 
-    html5QrCode.start(
-        { facingMode: "environment" }, // Usa la fotocamera posteriore
-        {
-            fps: 10,
-            qrbox: 250
-        },
-        (decodedText) => {
-            // Testo decodificato dal QR Code
-            document.getElementById("idCliente").value = decodedText;
-            html5QrCode.stop();
-        },
-        (errorMessage) => {
-            console.warn("Errore durante la scansione:", errorMessage);
-        }
-    ).catch((err) => {
-        console.error("Errore durante l'avvio della scansione:", err);
-    });
+    try {
+        await html5QrCode.start(
+            { facingMode: "environment" },
+            {
+                fps: 10,
+                qrbox: 250
+            },
+            (decodedText) => {
+                document.getElementById("idCliente").value = decodedText;
+                html5QrCode.stop();
+            },
+            (errorMessage) => {
+                console.warn("Errore durante la scansione:", errorMessage);
+            }
+        );
+    } catch (error) {
+        console.error("Errore durante l'avvio della scansione:", error);
+        alert("Errore durante l'avvio della scansione. Riprova.");
+    }
 }
 
