@@ -20,18 +20,18 @@ function startQRCodeScan() {
     const html5QrCode = new Html5Qrcode("reader");
 
     html5QrCode.start(
-        { facingMode: "environment" },
+        { facingMode: "environment" }, // Usa la fotocamera posteriore
         {
             fps: 10,
             qrbox: 250
         },
         (decodedText) => {
+            // Testo decodificato dal QR Code
             document.getElementById("idCliente").value = decodedText;
             html5QrCode.stop();
-            recuperaSaldo();
         },
         (errorMessage) => {
-            console.warn(errorMessage);
+            console.warn("Errore durante la scansione:", errorMessage);
         }
     ).catch((err) => {
         console.error("Errore durante l'avvio della scansione:", err);
