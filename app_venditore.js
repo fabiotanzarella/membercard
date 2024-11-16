@@ -1,4 +1,4 @@
-// Sostituisci `tuo-script-id` con l'ID del tuo Google Apps Script
+// URL dell'API di Google Apps Script
 const apiUrl = "https://script.google.com/macros/s/AKfycby5uRvoH7GeFRwFsz3JGaVNLSoGyOb6ASR4WbQPJRTIrK6MtjyFZgOQQSLFMgiCFhHiog/exec";
 
 /**
@@ -67,4 +67,3 @@ async function startQRCodeScan() {
         alert("Errore durante l'avvio della scansione. Riprova.");
     }
 }
-
