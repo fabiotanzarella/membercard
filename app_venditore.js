@@ -1,4 +1,4 @@
-const apiUrl = "https://script.google.com/macros/s/AKfycbxF9Fn4mR6QNtUEVfjLIOMyPNMtKtNqh6MfL2-Rgvs1B7fOenOQxnANG-ZEC7xdT8DqBQ/exec";
+const apiUrl = "https://script.google.com/macros/s/AKfycbyx59Jp_fzAniWATo1Tf3FOoondSeiBo2hpOg56N0G0ReWyVsnOt191l4bW3d6rJDn2yg/exec";
 
 /**
  * Funzione per avviare la scansione del QR Code.
