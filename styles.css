@@ -1,0 +1,81 @@
+/* Stile Generale */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f0f0f0;
+    color: #333;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Header */
+header {
+    background-color: #000;
+    color: #ffcc00;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.logo {
+    max-width: 100px;
+    margin-bottom: 10px;
+}
+
+h1 {
+    font-size: 1.8em;
+    color: #ffcc00;
+}
+
+/* Pulsanti */
+button {
+    background-color: #ffcc00;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+    width: 100%;
+    max-width: 300px;
+}
+
+button:hover {
+    background-color: #e6b800;
+}
+
+/* Input */
+input[type="text"],
+input[type="number"],
+input[type="password"] {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+/* Output */
+.output {
+    margin-top: 20px;
+    font-size: 1.2em;
+    color: #000;
+}
+
+/* Area di Scansione QR Code */
+#reader {
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #fff;
+}
