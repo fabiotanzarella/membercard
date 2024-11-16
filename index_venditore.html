@@ -3,28 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestione Clienti</title>
-    <!-- Sostituisci `ID_FILE_STYLES_CSS` con l'ID del file `styles.css` -->
-    <link rel="stylesheet" href="https://drive.google.com/uc?export=view&id=1ID_z3Adocbvf-R3SZljic0auOcw_UhOu">
+    <title>Gestione Clienti - Venditore</title>
+    <!-- Collegamento al foglio di stile -->
+    <link rel="stylesheet" href="https://fabiotanzarella.github.io/membercard/styles.css">
 </head>
 <body>
     <header>
-        <!-- Sostituisci `ID_FILE_LOGO` con l'ID del file `logo.png` -->
-        <img src="https://drive.google.com/uc?export=view&id=ID_FILE_LOGO" alt="Logo Negozio" class="logo">
+        <!-- Logo del negozio -->
+        <img src="https://fabiotanzarella.github.io/membercard/logo.png" alt="Logo Negozio" class="logo">
         <h1>Gestione Clienti</h1>
     </header>
 
     <main>
+        <!-- Sezione per scannerizzare il QR Code -->
         <button onclick="startQRCodeScan()">Scannerizza QR Code</button>
+
+        <!-- Input per ID Cliente e punti da aggiungere -->
         <input type="text" id="idCliente" placeholder="ID Cliente">
         <input type="number" id="punti" placeholder="Punti da aggiungere">
         <button onclick="aggiornaSaldo()">Aggiungi Punti</button>
+
+        <!-- Lettore QR Code -->
         <div id="reader" style="width: 300px; margin: auto;"></div>
+
+        <!-- Sezione di output per i messaggi -->
         <div id="outputVenditore" class="output"></div>
     </main>
 
-    <!-- Sostituisci `ID_FILE_APP_VENDITORE_JS` con l'ID del file `app_venditore.js` -->
-    <script src="https://drive.google.com/uc?export=view&id=1kueyr2NoZ2uB5iosnyUsOsUJd9mOQ-84"></script>
+    <!-- Inclusione della libreria HTML5 QR Code -->
     <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
+
+    <!-- Inclusione del file JavaScript dell'app venditore -->
+    <script src="hhttps://fabiotanzarella.github.io/membercard/app_venditore.js"></script>
 </body>
 </html>
