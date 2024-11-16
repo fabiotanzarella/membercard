@@ -2,7 +2,7 @@
 const apiUrl = "https://script.google.com/macros/s/AKfycby5uRvoH7GeFRwFsz3JGaVNLSoGyOb6ASR4WbQPJRTIrK6MtjyFZgOQQSLFMgiCFhHiog/exec";
 
 /**
- * Funzione per recuperare il saldo punti di un cliente.
+ * Funzione per recuperare il saldo del cliente.
  */
 async function recuperaSaldo() {
     const idCliente = document.getElementById("idCliente").value;
@@ -12,14 +12,21 @@ async function recuperaSaldo() {
         return;
     }
 
+    // Creiamo l'URL con i parametri
+    const url = `${apiUrl}?action=recuperaSaldo&id_cliente=${encodeURIComponent(idCliente)}`;
+
     try {
-        // Effettua una richiesta GET all'API
-        const response = await fetch(`${apiUrl}?action=recuperaSaldo&id_cliente=${idCliente}`, {
+        // Effettuiamo una richiesta GET
+        const response = await fetch(url, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
             }
         });
+
+        if (!response.ok) {
+            throw new Error(`Errore di rete: ${response.status}`);
+        }
 
         const data = await response.json();
         console.log("Risposta dell'API:", data);
