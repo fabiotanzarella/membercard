@@ -1,5 +1,5 @@
 // Sostituisci `tuo-script-id` con l'ID del tuo Google Apps Script
-const apiUrl = "https://script.google.com/macros/s/AKfycbx20GXluTG_QDJ_DYjxcprlM7uvIfBfbMf4SkT7-Jcs9ueaWhaT0Jnya8YtUeagvo5ilA/exec";
+const apiUrl = "https://script.google.com/macros/s/AKfycbwk26K658joqOuBKD8kDUVQMvLQcnmJyO6L5r_U2pn8r6m_pyQXprM9saB0SHBKx5oTDA/exec";
 
 function aggiornaSaldo() {
     const idCliente = document.getElementById("idCliente").value;
