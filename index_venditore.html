@@ -4,9 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>App Venditore</title>
-    <!-- Inclusione della libreria QR Code e del file JavaScript -->
+    <!-- Includi la libreria html5-qrcode -->
     <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
-    <script src="app_venditore.js"></script>
+    <!-- Il tuo file JavaScript -->
+    <script defer src="app_venditore.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .logo {
+            max-width: 200px;
+            margin-bottom: 20px;
+        }
+        #reader {
+            width: 300px;
+            margin: auto;
+        }
+        #output {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -18,7 +38,7 @@
         <button onclick="recuperaSaldo()">Verifica Saldo</button>
         <button onclick="aggiornaSaldo()">Aggiungi Punti</button>
         <button onclick="aggiungiCliente()">Aggiungi Cliente</button>
-        <div id="reader" style="width: 300px; margin: auto;"></div>
+        <div id="reader"></div>
         <div id="output"></div>
     </main>
 </body>
