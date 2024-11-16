@@ -18,7 +18,9 @@ async function recuperaSaldo() {
 
     // Creiamo l'URL con i parametri
     const url = `${apiUrl}?action=recuperaSaldo&id_cliente=${encodeURIComponent(idCliente)}`;
+
     try {
+        // Effettuiamo una richiesta GET
         const response = await fetch(url, {
             method: "GET",
             headers: {
@@ -27,17 +29,24 @@ async function recuperaSaldo() {
             mode: "cors"
         });
 
+        if (!response.ok) {
+            throw new Error(`Errore di rete: ${response.status}`);
+        }
+
         const data = await response.json();
+        console.log("Risposta dell'API:", data);
+
         if (data.status === "success") {
-            alert(`Saldo: ${data.saldo} punti`);
+            document.getElementById("output").innerText = `Saldo punti: ${data.saldo}`;
         } else {
             alert(data.message);
         }
     } catch (error) {
         console.error("Errore durante la richiesta:", error);
-        alert("Errore durante la richiesta.");
+        alert("Errore durante la richiesta. Verifica la connessione e riprova.");
     }
 }
+
 
 
 /**
