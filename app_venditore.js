@@ -34,19 +34,20 @@ async function startQRCodeScan() {
  */
 async function recuperaSaldo() {
     const idCliente = document.getElementById("idCliente").value.trim();
+    const apiUrl = "https://script.google.com/macros/s/tuo-script-id/exec";
 
     if (!idCliente) {
         alert("Inserisci un ID Cliente valido.");
         return;
     }
 
-    console.log("Recupero saldo per ID Cliente:", idCliente);
-
     try {
         const response = await fetch(`${apiUrl}?action=recuperaSaldo&id_cliente=${idCliente}`, {
             method: "GET",
-            headers: { "Content-Type": "application/json" },
-            mode: "cors"
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json"
+            }
         });
 
         if (!response.ok) {
@@ -54,10 +55,10 @@ async function recuperaSaldo() {
         }
 
         const data = await response.json();
-        console.log("Risposta dell'API:", data);
+        console.log("Risposta:", data);
 
         if (data.status === "success") {
-            document.getElementById("output").innerText = `Saldo punti: ${data.data.saldo}`;
+            alert(`Saldo punti: ${data.saldo}`);
         } else {
             alert(data.message);
         }
@@ -66,6 +67,7 @@ async function recuperaSaldo() {
         alert("Errore durante il recupero del saldo.");
     }
 }
+
 
 /**
  * Funzione per aggiornare il saldo del cliente.
