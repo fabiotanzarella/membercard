@@ -4,9 +4,20 @@ const apiUrl = "https://script.google.com/macros/s/AKfycby5uRvoH7GeFRwFsz3JGaVNL
 /**
  * Funzione per recuperare il saldo del cliente.
  */
-async function recuperaSaldo(idCliente) {
-    const url = `${apiUrl}?action=recuperaSaldo&id_cliente=${encodeURIComponent(idCliente)}`;
+async function recuperaSaldo() {
+    const idCliente = document.getElementById("idCliente").value.trim();
 
+    // Log del valore di `idCliente`
+    console.log("ID Cliente letto:", idCliente);
+
+    // Verifica se l'ID Cliente è valido
+    if (!idCliente || idCliente === "") {
+        alert("Inserisci un ID Cliente valido.");
+        return;
+    }
+
+    // Creiamo l'URL con i parametri
+    const url = `${apiUrl}?action=recuperaSaldo&id_cliente=${encodeURIComponent(idCliente)}`;
     try {
         const response = await fetch(url, {
             method: "GET",
