@@ -1,39 +1,63 @@
 // Sostituisci `tuo-script-id` con l'ID del tuo Google Apps Script
 const apiUrl = "https://script.google.com/macros/s/AKfycby5uRvoH7GeFRwFsz3JGaVNLSoGyOb6ASR4WbQPJRTIrK6MtjyFZgOQQSLFMgiCFhHiog/exec";
 
-function recuperaSaldo() {
+/**
+ * Funzione per recuperare il saldo punti di un cliente.
+ */
+async function recuperaSaldo() {
     const idCliente = document.getElementById("idCliente").value;
 
-    fetch(`${apiUrl}?action=recuperaSaldo&id_cliente=${idCliente}`)
-    .then(response => response.json())
-    .then(data => {
+    if (!idCliente) {
+        alert("Inserisci un ID Cliente valido.");
+        return;
+    }
+
+    try {
+        // Effettua una richiesta GET all'API
+        const response = await fetch(`${apiUrl}?action=recuperaSaldo&id_cliente=${idCliente}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        const data = await response.json();
+        console.log("Risposta dell'API:", data);
+
         if (data.status === "success") {
-            document.getElementById("saldoOutput").textContent = `Saldo punti: ${data.saldo}`;
+            alert(`Saldo punti per ${idCliente}: ${data.saldo} punti`);
         } else {
-            document.getElementById("saldoOutput").textContent = data.message;
+            alert(data.message);
         }
-    })
-    .catch(error => console.error("Errore:", error));
+    } catch (error) {
+        console.error("Errore durante la richiesta:", error);
+        alert("Errore durante la richiesta. Verifica la connessione e riprova.");
+    }
 }
 
-function startQRCodeScan() {
+/**
+ * Funzione per scannerizzare il QR Code e ottenere l'ID Cliente.
+ */
+async function startQRCodeScan() {
     const html5QrCode = new Html5Qrcode("reader");
 
-    html5QrCode.start(
-        { facingMode: "environment" }, // Usa la fotocamera posteriore
-        {
-            fps: 10,
-            qrbox: 250
-        },
-        (decodedText) => {
-            // Testo decodificato dal QR Code
-            document.getElementById("idCliente").value = decodedText;
-            html5QrCode.stop();
-        },
-        (errorMessage) => {
-            console.warn("Errore durante la scansione:", errorMessage);
-        }
-    ).catch((err) => {
-        console.error("Errore durante l'avvio della scansione:", err);
-    });
+    try {
+        await html5QrCode.start(
+            { facingMode: "environment" },
+            {
+                fps: 10,
+                qrbox: 250
+            },
+            (decodedText) => {
+                document.getElementById("idCliente").value = decodedText;
+                html5QrCode.stop();
+            },
+            (errorMessage) => {
+                console.warn("Errore durante la scansione:", errorMessage);
+            }
+        );
+    } catch (error) {
+        console.error("Errore durante l'avvio della scansione:", error);
+        alert("Errore durante l'avvio della scansione. Riprova.");
+    }
 }
